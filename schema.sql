@@ -1,7 +1,11 @@
+CREATE SEQUENCE position_seq START 1;
+
 create table position(
                          id_position bigint primary key,
                          name varchar(255) not null
 );
+
+CREATE SEQUENCE employee_seq START 1;
 
 create table employee(
                          id_employee bigint primary key,
