@@ -1,7 +1,12 @@
 package ro.unibuc.fmi.mgp.e1.position;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class PositionRequest {
     private Long id;
+    @NotBlank
+    @Size(min = 1, max = 255)
     private String name;
 
     public Long getId() {

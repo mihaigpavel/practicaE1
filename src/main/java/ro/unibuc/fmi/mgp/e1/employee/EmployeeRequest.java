@@ -1,13 +1,23 @@
 package ro.unibuc.fmi.mgp.e1.employee;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class EmployeeRequest {
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @Email
+    @NotBlank
     private String email;
+    @NotNull
     private LocalDate employmentDate;
+    @NotNull
     private Long fkPosition;
 
     public Long getId() {

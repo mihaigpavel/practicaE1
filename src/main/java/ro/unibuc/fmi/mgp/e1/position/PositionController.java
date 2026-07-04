@@ -1,9 +1,9 @@
 package ro.unibuc.fmi.mgp.e1.position;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/positions")
@@ -15,8 +15,15 @@ public class PositionController {
     }
 
     @PostMapping
-    public void createPosition(@RequestBody PositionRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPosition(@Valid @RequestBody PositionRequest request) {
         IO.println(request.toString());
         positionService.createPosition(request);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PositionResponse> getPositionById(@PathVariable Long id) {
+        PositionResponse task = positionService.getPositionById(id);
+        return ResponseEntity.ok(task);
     }
 }
