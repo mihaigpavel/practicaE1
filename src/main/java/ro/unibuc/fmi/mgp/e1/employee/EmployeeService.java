@@ -1,6 +1,7 @@
 package ro.unibuc.fmi.mgp.e1.employee;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.unibuc.fmi.mgp.e1.common.EntityReferencedException;
@@ -75,7 +76,10 @@ public class EmployeeService {
 
     @Transactional(readOnly = true)
     public List<EmployeeResponse> getAllEmployees() {
-        return null;
+        return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "lastName"))
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
 

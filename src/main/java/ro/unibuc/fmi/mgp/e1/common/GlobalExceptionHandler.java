@@ -60,6 +60,17 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(PermisionDenied.class)
+    public Map<String, Object> handlePermisionDenied(PermisionDenied ex) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("status", HttpStatus.UNAUTHORIZED.value());
+        errors.put("error", ex.getMessage());
+        errors.put("timestamp", Instant.now());
+
+        return errors;
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Map<String, Object> handleException(Exception ex) {

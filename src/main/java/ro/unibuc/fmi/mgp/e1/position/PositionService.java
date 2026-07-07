@@ -1,10 +1,13 @@
 package ro.unibuc.fmi.mgp.e1.position;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.unibuc.fmi.mgp.e1.common.EntityReferencedException;
 import ro.unibuc.fmi.mgp.e1.common.ResourceNotFoundException;
+
+import java.util.List;
 
 
 @Service
@@ -54,6 +57,14 @@ public class PositionService {
 
         positionRepository.save(position);
         return convertToResponse(position);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PositionResponse> getAllPositions() {
+        return positionRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
     private PositionResponse convertToResponse(Position position) {
