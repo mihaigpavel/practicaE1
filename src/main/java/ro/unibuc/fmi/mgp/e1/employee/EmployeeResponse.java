@@ -1,23 +1,22 @@
 package ro.unibuc.fmi.mgp.e1.employee;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 
-public class EmployeeRequest {
-    @NotBlank
+public class EmployeeResponse {
+    private Long id;
     private String firstName;
-    @NotBlank
     private String lastName;
-    @Email
-    @NotBlank
     private String email;
-    @NotNull
     private LocalDate employmentDate;
-    @NotNull
-    private Long fkPosition;
+    private Long positionId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -51,22 +50,11 @@ public class EmployeeRequest {
         this.employmentDate = employmentDate;
     }
 
-    public Long getFkPosition() {
-        return fkPosition;
+    public Long getPositionId() {
+        return positionId;
     }
 
-    public void setFkPosition(Long fkPosition) {
-        this.fkPosition = fkPosition;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeRequest{" +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", employmentDate=" + employmentDate +
-                ", fkPosition=" + fkPosition +
-                '}';
+    public void setPositionId(Long positionId) {
+        this.positionId = positionId;
     }
 }

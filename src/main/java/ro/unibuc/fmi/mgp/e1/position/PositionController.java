@@ -23,7 +23,18 @@ public class PositionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PositionResponse> getPositionById(@PathVariable Long id) {
-        PositionResponse task = positionService.getPositionById(id);
-        return ResponseEntity.ok(task);
+        PositionResponse position = positionService.getPositionById(id);
+        return ResponseEntity.ok(position);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePositionById(@PathVariable Long id) {
+        positionService.deletePositionById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PositionResponse> updatePositionById(@PathVariable Long id, @Valid @RequestBody PositionRequest request) {
+        PositionResponse position = positionService.updatePositionById(id, request);
+        return ResponseEntity.ok(position);
     }
 }

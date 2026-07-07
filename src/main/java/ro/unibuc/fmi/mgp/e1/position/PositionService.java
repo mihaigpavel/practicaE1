@@ -1,7 +1,9 @@
 package ro.unibuc.fmi.mgp.e1.position;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ro.unibuc.fmi.mgp.e1.common.EntityReferencedException;
 import ro.unibuc.fmi.mgp.e1.common.ResourceNotFoundException;
 
 
@@ -14,7 +16,7 @@ public class PositionService {
     }
 
     @Transactional
-    public void createPosition( PositionRequest positionRequest) {
+    public void createPosition(PositionRequest positionRequest) {
         Position position = new Position();
         position.setName(positionRequest.getName());
 
@@ -28,6 +30,30 @@ public class PositionService {
 
         return convertToResponse(position);
 
+    }
+
+    @Transactional
+    public void deletePositionById(Long id) {
+        if (!positionRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Position not found with id: " + id);
+        }
+        try {
+            positionRepository.deleteById(id);
+            positionRepository.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityReferencedException("Cannot delete position with id " + id + " because it is referenced by other entities.");
+        }
+    }
+
+    @Transactional
+    public PositionResponse updatePositionById(Long id, PositionRequest positionRequest) {
+        Position position = positionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Position not found with id: " + id));
+
+        position.setName(positionRequest.getName());
+
+        positionRepository.save(position);
+        return convertToResponse(position);
     }
 
     private PositionResponse convertToResponse(Position position) {

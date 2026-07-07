@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +26,36 @@ public class GlobalExceptionHandler {
         return error;
     }
 
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public Map<String, Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
         Map<String, Object> errors = new HashMap<>();
         errors.put("status", HttpStatus.NOT_FOUND.value());
         errors.put("error", ex.getMessage());
+        errors.put("timestamp", Instant.now());
+
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(EntityReferencedException.class)
+    public Map<String, Object> handleEntityReferencedException(EntityReferencedException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("status", HttpStatus.CONFLICT.value());
+        errors.put("error", ex.getMessage());
+        errors.put("timestamp", Instant.now());
+
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidDataException.class)
+    public Map<String, Object> handleInvalidDataException(InvalidDataException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("status", HttpStatus.BAD_REQUEST.value());
+        errors.put("error", ex.getMessage());
+        errors.put("timestamp", Instant.now());
 
         return errors;
     }
@@ -41,6 +66,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> errors = new HashMap<>();
         errors.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         errors.put("error", ex.getMessage());
+        errors.put("timestamp", Instant.now());
 
         return errors;
     }
