@@ -1,5 +1,7 @@
 package ro.unibuc.fmi.mgp.e1.position;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/positions")
+@Tag(name = "Positions API", description = "Endpoints for managing job positions within the company")
 public class PositionController {
 
     private final PositionService positionService;
@@ -22,6 +25,7 @@ public class PositionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a new position", description = "Saves a new job position to the database based on the provided request.")
     public void createPosition(@Valid @RequestBody PositionRequest request, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
         IO.println(request.toString());
@@ -29,6 +33,7 @@ public class PositionController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get a position by ID", description = "Fetches the details of a specific position using its unique identifier.")
     public ResponseEntity<PositionResponse> getPositionById(@PathVariable Long id, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
         PositionResponse position = positionService.getPositionById(id);
@@ -36,12 +41,14 @@ public class PositionController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a position", description = "Deletes a position from the system by its ID.")
     public void deletePositionById(@PathVariable Long id, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
         positionService.deletePositionById(id);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update a position", description = "Updates the details of an existing position.")
     public ResponseEntity<PositionResponse> updatePositionById(@PathVariable Long id, @Valid @RequestBody PositionRequest request, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
         PositionResponse position = positionService.updatePositionById(id, request);
@@ -49,6 +56,7 @@ public class PositionController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all positions", description = "Retrieves a list of all positions, sorted alphabetically by name.")
     public ResponseEntity<List<PositionResponse>> getAllPositions(@RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
         List<PositionResponse> positions = positionService.getAllPositions();

@@ -18,8 +18,7 @@ public class PositionService {
         this.positionRepository = positionRepository;
     }
 
-    @Transactional
-    public void createPosition(PositionRequest positionRequest) {
+    @Transactional public void createPosition(PositionRequest positionRequest) {
         Position position = new Position();
         position.setName(positionRequest.getName());
 

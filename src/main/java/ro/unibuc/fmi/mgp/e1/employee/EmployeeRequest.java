@@ -1,22 +1,29 @@
 package ro.unibuc.fmi.mgp.e1.employee;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+@Schema(name = "Employee request",
+        description = "Informations about the employee")
 public class EmployeeRequest {
     @NotBlank
+    @Schema(example = "Mihai")
     private String firstName;
     @NotBlank
+    @Schema(example = "Pavel")
     private String lastName;
     @Email
     @NotBlank
+    @Schema(example = "mihai@gmail.com")
     private String email;
     @NotNull
     private LocalDate employmentDate;
     @NotNull
+    @Schema(example = "1" , description = "The identifier of the associated job position")
     private Long fkPosition;
 
     public String getFirstName() {
