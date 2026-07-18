@@ -30,7 +30,6 @@ public class EmployeeService {
         employee.setEmail(request.getEmail());
         employee.setEmploymentDate(request.getEmploymentDate());
         employee.setPositionId(request.getFkPosition());
-        // TODO: verificare existenta kfPosition
         employeeRepository.save(employee);
     }
 
