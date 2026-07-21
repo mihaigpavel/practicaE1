@@ -68,8 +68,6 @@ public class EmployeeService {
         employee.setEmploymentDate(request.getEmploymentDate());
         employee.setPositionId(request.getFkPosition());
 
-        employeeRepository.save(employee);
-
         return convertToResponse(employee);
     }
 

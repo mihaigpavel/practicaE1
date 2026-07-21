@@ -53,8 +53,6 @@ public class PositionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Position not found with id: " + id));
 
         position.setName(positionRequest.getName());
-
-        positionRepository.save(position);
         return convertToResponse(position);
     }
 
