@@ -44,8 +44,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(PermisionDenied.class)
-    public ErrorResponse handlePermisionDenied(PermisionDenied ex) {
+    @ExceptionHandler(PermissionDenied.class)
+    public ErrorResponse handlePermisionDenied(PermissionDenied ex) {
 
         return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), Instant.now());
     }

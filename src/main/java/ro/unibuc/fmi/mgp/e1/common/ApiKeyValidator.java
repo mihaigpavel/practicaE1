@@ -15,7 +15,7 @@ public class ApiKeyValidator {
         IO.println("Header: " + headerKey);
         IO.println("apiKey: " + apiKey);
         if (!Objects.equals(headerKey, apiKey)) {
-            throw new PermisionDenied("Permision denied:Invalid API key");
+            throw new PermissionDenied("Permision denied:Invalid API key");
         }
     }
 }
