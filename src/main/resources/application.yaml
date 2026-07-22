@@ -13,6 +13,7 @@ logging:
     org.hibernate.type.descriptor.sql: trace
     org.hibernate.orm.jdbc.bind: trace
     org.springframework.jdbc.core: trace
+    ro.unibuc.fmi.mgp: trace
 app:
   api-key: "1234"
 

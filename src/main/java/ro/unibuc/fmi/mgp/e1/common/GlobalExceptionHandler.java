@@ -12,41 +12,34 @@ import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse handleValidationExceptions(MethodArgumentNotValidException ex) {
-
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), extractErrorMessage(ex), Instant.now());
-
     }
 
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException ex) {
-
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), Instant.now());
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(EntityReferencedException.class)
     public ErrorResponse handleEntityReferencedException(EntityReferencedException ex) {
-
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), Instant.now());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidDataException.class)
     public ErrorResponse handleInvalidDataException(InvalidDataException ex) {
-
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Instant.now());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(PermissionDenied.class)
     public ErrorResponse handlePermisionDenied(PermissionDenied ex) {
-
         return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), Instant.now());
     }
 
@@ -58,7 +51,6 @@ public class GlobalExceptionHandler {
 
 
     private String extractErrorMessage(MethodArgumentNotValidException ex) {
-
         StringBuilder errorMsg = new StringBuilder();
         // Extragem toate erorile din excepție și populăm map-ul
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -68,6 +60,4 @@ public class GlobalExceptionHandler {
         });
         return errorMsg.toString();
     }
-
-
 }
