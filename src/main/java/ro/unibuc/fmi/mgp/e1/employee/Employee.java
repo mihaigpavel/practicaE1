@@ -2,6 +2,7 @@ package ro.unibuc.fmi.mgp.e1.employee;
 
 
 import jakarta.persistence.*;
+import ro.unibuc.fmi.mgp.e1.position.Position;
 
 import java.time.LocalDate;
 
@@ -21,8 +22,10 @@ public class Employee {
     private String email;
     @Column(name = "employment_date")
     private LocalDate employmentDate;
-    @Column(name = "position_id")
-    private Long positionId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     public Long getId() {
         return id;
@@ -64,11 +67,11 @@ public class Employee {
         this.employmentDate = employmentDate;
     }
 
-    public Long getPositionId() {
-        return positionId;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPositionId(Long positionId) {
-        this.positionId = positionId;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.unibuc.fmi.mgp.e1.common.EntityReferencedException;
 import ro.unibuc.fmi.mgp.e1.common.InvalidDataException;
 import ro.unibuc.fmi.mgp.e1.common.ResourceNotFoundException;
+import ro.unibuc.fmi.mgp.e1.position.Position;
 import ro.unibuc.fmi.mgp.e1.position.PositionRepository;
 
 import java.util.List;
@@ -29,7 +30,8 @@ public class EmployeeService {
         employee.setLastName(request.getLastName());
         employee.setEmail(request.getEmail());
         employee.setEmploymentDate(request.getEmploymentDate());
-        employee.setPositionId(request.getFkPosition());
+        Position position = positionRepository.getReferenceById(request.getFkPosition());
+        employee.setPosition(position);
         employeeRepository.save(employee);
     }
 
@@ -66,7 +68,8 @@ public class EmployeeService {
         employee.setLastName(request.getLastName());
         employee.setEmail(request.getEmail());
         employee.setEmploymentDate(request.getEmploymentDate());
-        employee.setPositionId(request.getFkPosition());
+        Position position = positionRepository.getReferenceById(request.getFkPosition());
+        employee.setPosition(position);
 
         return convertToResponse(employee);
     }
@@ -87,7 +90,7 @@ public class EmployeeService {
         employeeResponse.setLastName(employee.getLastName());
         employeeResponse.setEmail(employee.getEmail());
         employeeResponse.setEmploymentDate(employee.getEmploymentDate());
-        employeeResponse.setPositionId(employee.getPositionId());
+        employeeResponse.setPositionId(employee.getPosition().getId());
         return employeeResponse;
     }
 
