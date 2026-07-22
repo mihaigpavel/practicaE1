@@ -3,6 +3,9 @@ package ro.unibuc.fmi.mgp.e1.employee;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final ApiKeyValidator apiKeyValidator;
 
+    private final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
     public EmployeeController(EmployeeService employeeService, ApiKeyValidator apiKeyValidator) {
         this.employeeService = employeeService;
         this.apiKeyValidator = apiKeyValidator;
@@ -28,7 +33,7 @@ public class EmployeeController {
     @Operation(summary = "Create a new employee", description = "Saves a new job employee to the database based on the provided request.")
     public void createEmployee(@Valid @RequestBody EmployeeRequest request, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
-        IO.println(request.toString());
+        logger.debug("Am primit requestul: {}", request);
         employeeService.createEmployee(request);
     }
 

@@ -3,6 +3,8 @@ package ro.unibuc.fmi.mgp.e1.position;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ public class PositionController {
     private final PositionService positionService;
     private final ApiKeyValidator apiKeyValidator;
 
+    private final Logger logger = LoggerFactory.getLogger(PositionController.class);
+
     public PositionController(PositionService positionService, ApiKeyValidator apiKeyValidator) {
         this.positionService = positionService;
         this.apiKeyValidator = apiKeyValidator;
@@ -28,7 +32,7 @@ public class PositionController {
     @Operation(summary = "Create a new position", description = "Saves a new job position to the database based on the provided request.")
     public void createPosition(@Valid @RequestBody PositionRequest request, @RequestHeader("x-api-key") String apiKey) {
         apiKeyValidator.validateApiKey(apiKey);
-        IO.println(request.toString());
+        logger.debug("Am primit requestul: {}", request);
         positionService.createPosition(request);
     }
 
