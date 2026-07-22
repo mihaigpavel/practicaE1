@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     private String extractErrorMessage(MethodArgumentNotValidException ex) {
         StringBuilder errorMsg = new StringBuilder();
         // Extragem toate erorile din excepție și populăm map-ul
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errorMsg.append(fieldName).append(": ").append(errorMessage).append("; ");

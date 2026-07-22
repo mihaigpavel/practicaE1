@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,10 +17,15 @@ import java.util.List;
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private ApiKeyValidator apiKeyValidator;
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private final ApiKeyValidator apiKeyValidator;
+
+    private final ObjectMapper objectMapper;
+
+    public ApiKeyFilter(ApiKeyValidator apiKeyValidator, ObjectMapper objectMapper) {
+        this.apiKeyValidator = apiKeyValidator;
+        this.objectMapper = objectMapper;
+    }
 
     private static final List<String> SWAGGER_PATHS = List.of(
             "/v3/api-docs",

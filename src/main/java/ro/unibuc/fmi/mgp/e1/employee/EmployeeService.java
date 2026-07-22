@@ -43,7 +43,7 @@ public class EmployeeService {
         }
         try {
             employeeRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException _) {
             throw new EntityReferencedException("Cannot delete employee with id " + id + " because it is referenced by other entities.");
 
         }

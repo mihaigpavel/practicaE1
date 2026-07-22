@@ -42,7 +42,7 @@ public class PositionService {
         try {
             positionRepository.deleteById(id);
             positionRepository.flush();
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException _) {
             throw new EntityReferencedException("Cannot delete position with id " + id + " because it is referenced by other entities.");
         }
     }

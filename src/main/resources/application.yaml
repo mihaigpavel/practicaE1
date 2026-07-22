@@ -6,7 +6,6 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/e1
     username: postgres
-    password: mihai
 logging:
   level:
     org.hibernate.SQL: debug
