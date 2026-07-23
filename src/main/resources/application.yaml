@@ -1,3 +1,18 @@
 spring:
+  jpa:
+    open-in-view: false
   application:
     name: e1
+  datasource:
+    url: jdbc:postgresql://localhost:5433/e1
+    username: postgres
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.orm.jdbc.bind: trace
+    org.springframework.jdbc.core: trace
+    ro.unibuc.fmi.mgp: trace
+app:
+  api-key: "1234"
+
