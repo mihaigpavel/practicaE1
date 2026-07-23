@@ -38,15 +38,15 @@ public class EmployeeService {
     @Transactional
     public void deleteEmployeeById(Long id) {
 
-        if (!employeeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Employee not found with id: " + id);
-        }
-        try {
-            employeeRepository.deleteById(id);
-        } catch (DataIntegrityViolationException _) {
-            throw new EntityReferencedException("Cannot delete employee with id " + id + " because it is referenced by other entities.");
+        if (employeeRepository.existsById(id)) {
+            try {
+                employeeRepository.deleteById(id);
+            } catch (DataIntegrityViolationException _) {
+                throw new EntityReferencedException("Cannot delete employee with id " + id + " because it is referenced by other entities.");
 
+            }
         }
+
     }
 
     @Transactional(readOnly = true)
