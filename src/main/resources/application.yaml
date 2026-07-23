@@ -4,7 +4,7 @@ spring:
   application:
     name: e1
   datasource:
-    url: jdbc:postgresql://localhost:5432/e1
+    url: jdbc:postgresql://localhost:5433/e1
     username: postgres
 logging:
   level:
