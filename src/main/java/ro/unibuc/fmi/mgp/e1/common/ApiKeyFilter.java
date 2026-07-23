@@ -35,19 +35,19 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String apiKey = request.getHeader("x-api-key");
+        logger.debug("Cererea a trecut prin filtru");
         try {
-            String apiKey = request.getHeader("x-api-key");
-            logger.debug("Cererea a trecut prin filtru");
             apiKeyValidator.validateApiKey(apiKey);
-            filterChain.doFilter(request, response);
-        } catch (Exception ex) {
+        } catch (PermissionDenied ex) {
             ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), Instant.now());
             response.setStatus(errorResponse.status());
             response.setContentType("application/json");
             response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
             response.getWriter().flush();
-
+            return;
         }
+        filterChain.doFilter(request, response);
     }
 
     @Override
