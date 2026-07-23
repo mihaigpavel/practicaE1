@@ -25,6 +25,7 @@ public class EmployeeService {
 
     @Transactional
     public void createEmployee(EmployeeRequest request) {
+        validateEmployee(request);
         Employee employee = new Employee();
         employee.setFirstName(request.getFirstName());
         employee.setLastName(request.getLastName());
@@ -80,6 +81,12 @@ public class EmployeeService {
                 .stream()
                 .map(this::convertToResponse)
                 .toList();
+    }
+
+    private void validateEmployee(EmployeeRequest request) {
+        if (!positionRepository.existsById(request.getFkPosition())) {
+            throw new ResourceNotFoundException("Position not found with id: " + request.getFkPosition());
+        }
     }
 
 
