@@ -36,14 +36,12 @@ public class PositionService {
 
     @Transactional
     public void deletePositionById(Long id) {
-        if (positionRepository.existsById(id)) {
             try {
                 positionRepository.deleteById(id);
                 positionRepository.flush();
             } catch (DataIntegrityViolationException _) {
                 throw new EntityReferencedException("Cannot delete position with id " + id + " because it is referenced by other entities.");
             }
-        }
     }
 
     @Transactional
